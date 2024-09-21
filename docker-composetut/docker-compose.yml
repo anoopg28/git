@@ -1,0 +1,37 @@
+services:
+  web:
+    image: "nginx"
+    ports:
+      - "8080:80"
+    networks:
+      - my_network
+  db:
+    image: "mysql:latest"
+    env_file:
+      - mysqlconfig.env
+#   environment:
+#     - MYSQL_ROOT_PASSWORD=anoop
+    networks:
+     - my_network
+  rcache:
+#   image: "redis:8.0-M01-bookworm"
+    image: "redis:${tag}"
+#   profiles:
+#     - rediscache 
+    networks:
+      - my_network
+  pro1:
+    image: "annu0101/pro1:latest"
+    ports:
+      - "82:80"
+    networks:
+      - my_network
+  pro2:
+    image: "annu0101/pro2:latest"
+    ports:
+      - "3000:80"
+    networks:
+      - my_network
+networks:
+  my_network:
+    driver: bridge
